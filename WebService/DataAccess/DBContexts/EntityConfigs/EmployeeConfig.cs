@@ -14,13 +14,17 @@ public class EmployeeConfig : IEntityTypeConfiguration<Employee>
             .ValueGeneratedOnAdd();
 
         builder
-            .HasMany(e => e.Messages)
+            .HasMany(e => e.SentMessages)
             .WithOne(m => m.Sender)
-            .HasForeignKey(m => m.SenderId);
-        
+            .HasForeignKey(m => m.SenderId)
+            .OnDelete(DeleteBehavior.NoAction)
+            .HasPrincipalKey(e => e.Id);
+
         builder
-            .HasMany(e => e.Messages)
+            .HasMany(e => e.ReceivedMessages)
             .WithOne(m => m.Addressee)
-            .HasForeignKey(m => m.AddresseeId);
+            .HasForeignKey(m => m.AddresseeId)
+            .OnDelete(DeleteBehavior.NoAction)
+            .HasPrincipalKey(e => e.Id);
     }
 }

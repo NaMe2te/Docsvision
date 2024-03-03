@@ -8,7 +8,8 @@ public class Employee
     {
         Name = name;
         Department = department;
-        Messages = new List<Message>();
+        SentMessages = new List<Message>();
+        ReceivedMessages = new List<Message>();
     }
 
     protected Employee() { }
@@ -16,5 +17,6 @@ public class Employee
     public Guid Id { get; init; }
     public string Name { get; set; }
     public Department Department { get; set; }
-    public ICollection<Message> Messages { get; init; }
+    public ICollection<Message> SentMessages { get; init; }
+    public ICollection<Message> ReceivedMessages { get; init; }
 }

@@ -11,10 +11,12 @@ public class MessageConfig : IEntityTypeConfiguration<Message>
         builder.Property(m => m.Id).ValueGeneratedOnAdd();
         builder
             .HasOne(m => m.Addressee)
-            .WithMany(e => e.Messages);
+            .WithMany(e => e.Messages)
+            .HasForeignKey(m => m.AddresseeId);
 
         builder
             .HasOne(m => m.Sender)
-            .WithMany(e => e.Messages);
+            .WithMany(e => e.Messages)
+            .HasForeignKey(m => m.SenderId);
     }
 }

@@ -16,11 +16,11 @@ public class EmployeeConfig : IEntityTypeConfiguration<Employee>
         builder
             .HasMany(e => e.Messages)
             .WithOne(m => m.Sender)
-            .HasForeignKey(m => m.Sender.Id);
+            .HasForeignKey(m => m.SenderId);
         
         builder
             .HasMany(e => e.Messages)
             .WithOne(m => m.Addressee)
-            .HasForeignKey(m => m.Addressee.Id);
+            .HasForeignKey(m => m.AddresseeId);
     }
 }

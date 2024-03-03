@@ -2,13 +2,13 @@
 
 public class Message
 {
-    public Message(string title, DateTime dateSending, string content, Employee sender, Employee addressee)
+    public Message(string title, DateTime dateSending, string content, Guid senderId, Guid addresseeId)
     {
         Title = title;
         DateSending = dateSending;
         Content = content;
-        Sender = sender;
-        Addressee = addressee;
+        SenderId = senderId;
+        AddresseeId = addresseeId;
     }
     
     protected Message() {}
@@ -18,6 +18,8 @@ public class Message
     public DateTime DateSending { get; init; }
     public string Content { get; set; }
     
-    public Employee Sender { get; init; }
-    public Employee Addressee { get; init; }
+    public Guid SenderId { get; init; }
+    public virtual Employee Sender { get; init; }
+    public Guid AddresseeId { get; init; }
+    public virtual Employee Addressee { get; init; }
 }

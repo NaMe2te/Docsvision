@@ -23,9 +23,9 @@ public abstract class BaseEfRepository<TEntity> : IBaseRepository<TEntity> where
         return _databaseContext.Set<TEntity>().Update(model).Entity;
     }
 
-    public async Task Delete(TEntity model)
+    public TEntity Delete(TEntity model)
     {
-        _databaseContext.Set<TEntity>().Remove(model);
+        return _databaseContext.Set<TEntity>().Remove(model).Entity;
     }
 
     public async Task<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
@@ -33,8 +33,15 @@ public abstract class BaseEfRepository<TEntity> : IBaseRepository<TEntity> where
         return await _databaseContext.Set<TEntity>().FirstOrDefaultAsync(predicate) ?? throw new ArgumentNullException(nameof(TEntity));
     }
 
-    public async Task<IEnumerable<TEntity>> GetAll()
+    public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>>? predicate = null)
     {
-        return await _databaseContext.Set<TEntity>().ToListAsync();
+        IQueryable<TEntity> queryable = _databaseContext.Set<TEntity>();
+
+        if (predicate is not null)
+        {
+            queryable = queryable.Where(predicate);
+        }
+
+        return await queryable.ToListAsync();
     }
 }

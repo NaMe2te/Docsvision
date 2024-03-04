@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Services.Abstractions;
+using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -8,9 +9,9 @@ namespace API.Controllers;
 [Route("api/[controller]")]
 public class EmployeeController : Controller
 {
-    private readonly IEmployeeService _employeeService;
+    private readonly IBaseCrudService<Employee, EmployeeDto> _employeeService;
 
-    public EmployeeController(IEmployeeService employeeService)
+    public EmployeeController(IBaseCrudService<Employee, EmployeeDto> employeeService)
     {
         _employeeService = employeeService;
     }

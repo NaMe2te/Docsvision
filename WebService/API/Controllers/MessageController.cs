@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Services.Abstractions;
+using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -8,9 +9,9 @@ namespace API.Controllers;
 [Route("api/[controller]")]
 public class MessageController : Controller
 {
-    private readonly IMessageService _messageService;
+    private readonly IBaseCrudService<Message, MessageDto> _messageService;
 
-    public MessageController(IMessageService messageService)
+    public MessageController(IBaseCrudService<Message, MessageDto> messageService)
     {
         _messageService = messageService;
     }

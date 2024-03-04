@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
-builder.Services.AddDatabaseContext(x => x.UseSqlServer(config.GetConnectionString("DatabaseConnection")));
+builder.Services.AddDatabaseContext(x => x.UseLazyLoadingProxies().UseSqlServer(config.GetConnectionString("DatabaseConnection")));
 builder.Services.AddDataAccess();
 builder.Services.AddApplication();
 

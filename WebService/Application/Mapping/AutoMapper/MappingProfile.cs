@@ -24,7 +24,7 @@ public class MappingProfile : Profile
         CreateMap<Employee, EmployeeDto>()
             .ForMember(dest => dest.Department,
                 opt => opt.MapFrom(src => src.Department.ToString("G")))
-            .ReverseMap()
+        .ReverseMap()
             .ForMember(dest => dest.Department,
                 opt => opt.MapFrom(src => ParseUtility.ParseEnum<Department>(src.Department)));
     }

@@ -17,6 +17,6 @@ public class Employee
     public Guid Id { get; init; }
     public string Name { get; set; }
     public Department Department { get; set; }
-    public ICollection<Message> SentMessages { get; init; }
-    public ICollection<Message> ReceivedMessages { get; init; }
+    public virtual ICollection<Message> SentMessages { get; set; }
+    public virtual ICollection<Message> ReceivedMessages { get; set; }
 }

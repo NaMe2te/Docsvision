@@ -43,5 +43,12 @@ public class MainWindowViewModel : BaseViewModel
         _employees.Add(new Employee());
 
         _currentAccount = new Employee();
+
+        _currentAccount.SentMessages.Add(new Message());
+        _currentAccount.SentMessages.Add(new Message());
+        _currentAccount.SentMessages.Add(new Message());
+
+        _currentAccount.ReceivedMessages.Add(new Message());
+        _currentAccount.ReceivedMessages.Add(new Message());
     }
 }

@@ -16,40 +16,66 @@
     <Grid>
         <TabControl>
             <TabItem Header="Дом">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <Grid>
-                    <Label Content="История сообщений:" FontSize="15" />
-                    <ListView ItemsSource="{Binding CurrentAccount.SentMessages}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Отправлено">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Title}" FontWeight="Bold"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Дата отправки" DisplayMemberBinding="{Binding DateSending}"/>
-                            <GridViewColumn Header="Содержание" DisplayMemberBinding="{Binding Content}"/>
-                        </GridView>
-                    </ListView.View>
-                    </ListView>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                    <ListView ItemsSource="{Binding CurrentAccount.ReceivedMessages}" Grid.Column="1">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Принято">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Title}" FontWeight="Bold"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="Дата отправки" DisplayMemberBinding="{Binding DateSending}"/>
-                                <GridViewColumn Header="Содержание" DisplayMemberBinding="{Binding Content}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <Label Content="Отправленные сообщения: " Grid.Row="0" FontWeight="Bold"/>
+
+                    <ListBox Grid.Row="1" ItemsSource="{Binding CurrentAccount.SentMessages}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Addressee.FullName, StringFormat='Кому: {0}'}" />
+                                        <TextBlock Text="{Binding Addressee.Department, StringFormat=' ({0})'}" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Title, StringFormat='Заголовок: {0}'}" />
+                                    <TextBlock Text="{Binding DateSending, StringFormat='Дата:  {0:HH:mm dd.MM.yyyy}'}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="BorderBrush" Value="DarkSlateBlue"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Padding" Value="5"/>
+                                <Setter Property="Margin" Value="2"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+
+                    <Label Content="Полученные сообщения: " Grid.Row="2" FontWeight="Bold"/>
+
+                    <ListBox Grid.Row="3" ItemsSource="{Binding CurrentAccount.SentMessages}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Sender.FullName, StringFormat='От кого: {0}'}" />
+                                        <TextBlock Text="{Binding Sender.Department, StringFormat=' ({0})'}" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Title, StringFormat='Заголовок: {0}'}" />
+                                    <TextBlock Text="{Binding DateSending, StringFormat='Дата:  {0:HH:mm dd.MM.yyyy}'}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="BorderBrush" Value="DarkSlateBlue"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Padding" Value="5"/>
+                                <Setter Property="Margin" Value="2"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
                 </Grid>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Работники">
                 <ListBox ItemsSource="{Binding Employees}">

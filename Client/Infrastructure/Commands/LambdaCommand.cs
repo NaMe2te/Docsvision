@@ -1,6 +1,6 @@
 ﻿namespace Client.Infrastructure.Commands;
 
-public class LambdaCommand : BaseCommand
+public abstract class LambdaCommand : BaseCommand
 {
     private readonly Action<object> _execute;
     private readonly Func<object, bool> _canExecute;

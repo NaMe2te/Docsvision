@@ -1,4 +1,4 @@
-﻿<Window x:Class="Client.MainWindow"
+﻿<Window x:Class="Client.Views.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -27,25 +27,28 @@
 
                     <Label Content="Отправленные сообщения: " Grid.Row="0" FontWeight="Bold"/>
 
-                    <ListBox Grid.Row="1" ItemsSource="{Binding CurrentAccount.SentMessages}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Addressee.FullName, StringFormat='Кому: {0}'}" />
-                                        <TextBlock Text="{Binding Addressee.Department, StringFormat=' ({0})'}" />
+                    <ListBox Grid.Row="1" 
+                             ItemsSource="{Binding CurrentAccount.SentMessages}"
+                            >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Addressee.FullName, StringFormat='Кому: {0}'}" />
+                                            <TextBlock Text="{Binding Addressee.Department, StringFormat=' ({0})'}" />
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Title, StringFormat='Заголовок: {0}'}" />
+                                        <TextBlock Text="{Binding DateSending, StringFormat='Дата:  {0:HH:mm dd.MM.yyyy}'}" />
                                     </StackPanel>
-                                    <TextBlock Text="{Binding Title, StringFormat='Заголовок: {0}'}" />
-                                    <TextBlock Text="{Binding DateSending, StringFormat='Дата:  {0:HH:mm dd.MM.yyyy}'}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        <ListBox.ItemContainerStyle>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="BorderBrush" Value="DarkSlateBlue"/>
                                 <Setter Property="BorderThickness" Value="1"/>
                                 <Setter Property="Padding" Value="5"/>
                                 <Setter Property="Margin" Value="2"/>
+                                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem_PreviewMouseLeftButtonDown"/>
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>

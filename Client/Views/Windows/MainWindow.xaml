@@ -13,6 +13,15 @@
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="BorderBrush" Value="DarkSlateBlue"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="2"/>
+            <EventSetter Event="MouseDoubleClick" Handler="Message_MouseDoubleClick"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <TabControl>
             <TabItem Header="Дом">
@@ -30,27 +39,18 @@
                     <ListBox Grid.Row="1" 
                              ItemsSource="{Binding CurrentAccount.SentMessages}"
                             >
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Addressee.FullName, StringFormat='Кому: {0}'}" />
-                                            <TextBlock Text="{Binding Addressee.Department, StringFormat=' ({0})'}" />
-                                        </StackPanel>
-                                        <TextBlock Text="{Binding Title, StringFormat='Заголовок: {0}'}" />
-                                        <TextBlock Text="{Binding DateSending, StringFormat='Дата:  {0:HH:mm dd.MM.yyyy}'}" />
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Addressee.FullName, StringFormat='Кому: {0}'}" />
+                                        <TextBlock Text="{Binding Addressee.Department, StringFormat=' ({0})'}" />
                                     </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                            <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="BorderBrush" Value="DarkSlateBlue"/>
-                                <Setter Property="BorderThickness" Value="1"/>
-                                <Setter Property="Padding" Value="5"/>
-                                <Setter Property="Margin" Value="2"/>
-                                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem_PreviewMouseLeftButtonDown"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
+                                    <TextBlock Text="{Binding Title, StringFormat='Заголовок: {0}'}" />
+                                    <TextBlock Text="{Binding DateSending, StringFormat='Дата:  {0:HH:mm dd.MM.yyyy}'}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
 
                     <Label Content="Полученные сообщения: " Grid.Row="2" FontWeight="Bold"/>
@@ -68,14 +68,6 @@
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="BorderBrush" Value="DarkSlateBlue"/>
-                                <Setter Property="BorderThickness" Value="1"/>
-                                <Setter Property="Padding" Value="5"/>
-                                <Setter Property="Margin" Value="2"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
                     </ListBox>
                 </Grid>
                 </ScrollViewer>
@@ -85,10 +77,10 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock ToolTip="Department" Text="{Binding Department}" />
+                                <TextBlock ToolTip="Департамент" Text="{Binding Department}" />
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock ToolTip="Name" Text="{Binding FullName}" FontWeight="Bold"  />
-                                    <TextBlock ToolTip="Email" Text="{Binding Email, StringFormat=' ({0})'}" />
+                                    <TextBlock ToolTip="Имя" Text="{Binding FullName}" FontWeight="Bold"  />
+                                    <TextBlock ToolTip="Емейл" Text="{Binding Email, StringFormat=' ({0})'}" />
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
@@ -123,19 +115,19 @@
                     CornerRadius="8,8,3,3">
                     <StackPanel Margin="5">
                         <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                            <TextBlock Text="Enployee Number: " FontWeight="Bold" />
+                            <TextBlock Text="Номер работника: " FontWeight="Bold" />
                             <TextBlock Text="{Binding CurrentAccount.Id}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                            <TextBlock Text="Name: " FontWeight="Bold" />
+                            <TextBlock Text="Имя: " FontWeight="Bold" />
                             <TextBlock Text="{Binding CurrentAccount.FullName}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                            <TextBlock Text="Department: " FontWeight="Bold" />
+                            <TextBlock Text="Департамент: " FontWeight="Bold" />
                             <TextBlock Text="{Binding CurrentAccount.Department}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                            <TextBlock Text="Email: " FontWeight="Bold" />
+                            <TextBlock Text="Емейл: " FontWeight="Bold" />
                             <TextBlock Text="{Binding CurrentAccount.Email}" />
                         </StackPanel>
                     </StackPanel>

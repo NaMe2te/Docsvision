@@ -10,8 +10,10 @@ public class OpenReadMessageWindowCommand : BaseCommand
 
     public override void Execute(object? parameter)
     {
-        Message message = new Message();
-        ReadMessageWindow readMessageWindow = new ReadMessageWindow(message);
-        readMessageWindow.Show();
+        if (parameter is not null && parameter is Message message)
+        {
+            ReadMessageWindow readMessageWindow = new ReadMessageWindow(message);
+            readMessageWindow.Show();
+        }
     }
 }

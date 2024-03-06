@@ -28,13 +28,6 @@ public class MainWindowViewModel : BaseViewModel
         set => Set(ref _currentAccount, value);
     }
 
-
-    private ICommand _openReadMessageWindowCommand;
-    public ICommand OpenReadMessageWindowCommand => _openReadMessageWindowCommand;
-
-
-
-
     public MainWindowViewModel()
     {
         _employees = [new Employee(), new Employee(), new Employee()];
@@ -47,7 +40,5 @@ public class MainWindowViewModel : BaseViewModel
 
         _currentAccount.ReceivedMessages.Add(new Message());
         _currentAccount.ReceivedMessages.Add(new Message());
-
-        _openReadMessageWindowCommand = new OpenReadMessageWindowCommand();
     }
 }

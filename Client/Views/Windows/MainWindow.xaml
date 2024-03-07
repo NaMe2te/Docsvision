@@ -27,50 +27,54 @@
         <TabControl>
             <TabItem Header="Сообщения">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Button Content="Написать новое сообщение" Grid.Row="0" Height="30"
+                                Command="{Binding OpenSentMessageFormCommand}"
+                                />
 
-                    <Label Content="Отправленные сообщения: " Grid.Row="0" FontWeight="Bold"/>
+                        <Label Content="Отправленные сообщения: " Grid.Row="1" FontWeight="Bold"/>
 
-                    <ListBox Grid.Row="1" 
-                             ItemsSource="{Binding CurrentAccount.SentMessages}"
-                            >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Addressee.FullName, StringFormat='Кому: {0}'}" />
-                                        <TextBlock Text="{Binding Addressee.Department, StringFormat=' ({0})'}" />
+                        <ListBox Grid.Row="2" 
+                                 ItemsSource="{Binding CurrentAccount.SentMessages}"
+                                >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Addressee.FullName, StringFormat='Кому: {0}'}" />
+                                            <TextBlock Text="{Binding Addressee.Department, StringFormat=' ({0})'}" />
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Title, StringFormat='Заголовок: {0}'}" />
+                                        <TextBlock Text="{Binding DateSending, StringFormat='Дата:  {0:HH:mm dd.MM.yyyy}'}" />
                                     </StackPanel>
-                                    <TextBlock Text="{Binding Title, StringFormat='Заголовок: {0}'}" />
-                                    <TextBlock Text="{Binding DateSending, StringFormat='Дата:  {0:HH:mm dd.MM.yyyy}'}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
 
-                    <Label Content="Полученные сообщения: " Grid.Row="2" FontWeight="Bold"/>
+                        <Label Content="Полученные сообщения: " Grid.Row="3" FontWeight="Bold"/>
 
-                    <ListBox Grid.Row="3" ItemsSource="{Binding CurrentAccount.SentMessages}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Sender.FullName, StringFormat='От кого: {0}'}" />
-                                        <TextBlock Text="{Binding Sender.Department, StringFormat=' ({0})'}" />
+                        <ListBox Grid.Row="4" ItemsSource="{Binding CurrentAccount.SentMessages}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Sender.FullName, StringFormat='От кого: {0}'}" />
+                                            <TextBlock Text="{Binding Sender.Department, StringFormat=' ({0})'}" />
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Title, StringFormat='Заголовок: {0}'}" />
+                                        <TextBlock Text="{Binding DateSending, StringFormat='Дата:  {0:HH:mm dd.MM.yyyy}'}" />
                                     </StackPanel>
-                                    <TextBlock Text="{Binding Title, StringFormat='Заголовок: {0}'}" />
-                                    <TextBlock Text="{Binding DateSending, StringFormat='Дата:  {0:HH:mm dd.MM.yyyy}'}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Работники">

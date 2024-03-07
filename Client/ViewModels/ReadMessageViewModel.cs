@@ -11,8 +11,6 @@ public class ReadMessageViewModel : BaseViewModel
         get => _currentMessage;
         set => Set(ref _currentMessage, value);
     }
-
-    public ReadMessageViewModel() { }
     
     public ReadMessageViewModel(Message currentMessage)
     {

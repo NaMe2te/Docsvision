@@ -20,6 +20,6 @@ public class MessageService : IMessageService
 
     public async Task SendMessage(MessageForSend message)
     {
-        await _httpClient.PostAsync("api/Message/Create", JsonContent.Create(message));
+        //await _httpClient.PostAsync("api/Message/Create", JsonContent.Create(message));
     }
 }

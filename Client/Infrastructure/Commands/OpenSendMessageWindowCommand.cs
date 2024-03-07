@@ -20,8 +20,8 @@ public class OpenSendMessageWindowCommand : BaseCommand
     {
         Guid? employeeIdForSending = parameter as Guid?;
         var window = new SentMessageWindow(_account, employeeIdForSending);
-        window.Owner = Application.Current.MainWindow;
-        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        /*window.Owner = Application.Current.MainWindow;
+        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;*/
         window.Show();
     }
 }

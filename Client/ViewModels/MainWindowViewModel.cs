@@ -42,6 +42,6 @@ public class MainWindowViewModel : BaseViewModel
         _currentAccount.ReceivedMessages.Add(new Message());
         _currentAccount.ReceivedMessages.Add(new Message());
 
-        OpenSentMessageFormCommand = new OpenSentMessageFormCommand(_currentAccount);
+        OpenSentMessageFormCommand = new OpenSendMessageWindowCommand(_currentAccount);
     }
 }

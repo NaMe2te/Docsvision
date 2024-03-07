@@ -19,10 +19,10 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="5"/>
             <Setter Property="Margin" Value="2"/>
-            <EventSetter Event="MouseDoubleClick" Handler="Message_MouseDoubleClick"/>
+            <EventSetter Event="MouseDoubleClick" Handler="OpenMessageWindow_MouseDoubleClick"/>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid x:Name="MainGrid">
         <TabControl>
             <TabItem Header="Дом">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -94,15 +94,11 @@
                             <Setter Property="ContextMenu">
                                 <Setter.Value>
                                     <ContextMenu>
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext}" />
                                         <MenuItem Header="Написать сообщение"/>
                                     </ContextMenu>
                                 </Setter.Value>
                             </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="LightGray"/>
-                                </Trigger>
-                            </Style.Triggers>
                         </Style>
                     </ListBox.ItemContainerStyle>
                 </ListBox>

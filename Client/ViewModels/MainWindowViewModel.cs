@@ -27,6 +27,7 @@ public class MainWindowViewModel : BaseViewModel
         get => _currentAccount;
         set => Set(ref _currentAccount, value);
     }
+    public ICommand OpenSentMessageFormCommand { get; }
 
     public MainWindowViewModel()
     {
@@ -40,5 +41,7 @@ public class MainWindowViewModel : BaseViewModel
 
         _currentAccount.ReceivedMessages.Add(new Message());
         _currentAccount.ReceivedMessages.Add(new Message());
+
+        OpenSentMessageFormCommand = new OpenSentMessageFormCommand();
     }
 }

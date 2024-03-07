@@ -14,9 +14,6 @@ public abstract class BaseViewModel : INotifyPropertyChanged
 
     protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
     {
-        if (field.Equals(value)) 
-            return false;
-
         field = value;
         OnPropertyChanged(propertyName); 
 

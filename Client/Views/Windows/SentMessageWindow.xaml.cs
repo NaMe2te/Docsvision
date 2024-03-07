@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Client.Models;
+using Client.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace Client.Views.Windows
+namespace Client.Views.Windows;
+
+/// <summary>
+/// Interaction logic for SentMessageWindow.xaml
+/// </summary>
+public partial class SentMessageWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for SentMessageWindow.xaml
-    /// </summary>
-    public partial class SentMessageWindow : Window
+    public SentMessageWindow(/*Employee currentEmployee, List<Employee> employees, Employee? employeeForSending = null*/)
     {
-        public SentMessageWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        DataContext = new SentMessageViewWindow(/*currentEmployee, employees, employeeForSending*/);
     }
 }

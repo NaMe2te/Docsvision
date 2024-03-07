@@ -16,7 +16,7 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void Message_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    private void OpenMessageWindow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (sender is ListBoxItem listBoxItem && listBoxItem.DataContext is Message message)
         {

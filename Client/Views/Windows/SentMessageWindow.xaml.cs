@@ -10,9 +10,9 @@ namespace Client.Views.Windows;
 /// </summary>
 public partial class SentMessageWindow : Window
 {
-    public SentMessageWindow(/*Employee currentEmployee, List<Employee> employees, Employee? employeeForSending = null*/)
+    public SentMessageWindow(Employee account, Guid? employeeIdForSending = null)
     {
         InitializeComponent();
-        DataContext = new SentMessageViewWindow(/*currentEmployee, employees, employeeForSending*/);
+        DataContext = new SentMessageViewWindow(account, employeeIdForSending);
     }
 }

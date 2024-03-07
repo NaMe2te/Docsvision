@@ -15,7 +15,11 @@ public class SentMessageViewWindow : BaseViewModel
     public Employee SelectedRecipient
     {
         get => _selectedRecipient;
-        set => Set(ref _selectedRecipient, value);
+        set
+        {
+            Set(ref _selectedRecipient, value);
+            _messageForSend.AddresseeId = _selectedRecipient.Id;
+        }
     }
 
     private ObservableCollection<Employee> _employees;
@@ -61,17 +65,17 @@ public class SentMessageViewWindow : BaseViewModel
 
     public ICommand SendMessageCommand { get; }
 
-    public SentMessageViewWindow(/*Employee currentEmployee, List<Employee> employees, Employee? employeeForSending = null*/)
+    public SentMessageViewWindow(Employee account, Guid? employeeIdForSending = null)
     {
         _account = new Employee();
         _employees = [new Employee(), new Employee(), new Employee()];
-        Employee? employeeForSending = new Employee();
-        if (employeeForSending is not null)
+        _messageForSend = new MessageForSend(string.Empty, string.Empty, _account.Id, default(Guid));
+        if (employeeIdForSending is not null)
         {
-            SelectedRecipient = _employees.First(e => e.Id == employeeForSending.Id);
+            SelectedRecipient = _employees.First(e => e.Id == employeeIdForSending);
+            _messageForSend.AddresseeId = SelectedRecipient.Id;
         }
 
         SendMessageCommand = new SendMessageCommand();
-        _messageForSend = new MessageForSend(_messageTitle, _messageContent, SelectedRecipient.Id, _account.Id);
     }
 }

@@ -14,6 +14,7 @@
         <vm:MainWindowViewModel />
     </Window.DataContext>
     <Window.Resources>
+        <vm:MainWindowViewModel x:Key="MainWindowViewModel" />
         <Style TargetType="ListBoxItem">
             <Setter Property="BorderBrush" Value="DarkSlateBlue"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -24,7 +25,7 @@
     </Window.Resources>
     <Grid x:Name="MainGrid">
         <TabControl>
-            <TabItem Header="Дом">
+            <TabItem Header="Сообщения">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -94,8 +95,10 @@
                             <Setter Property="ContextMenu">
                                 <Setter.Value>
                                     <ContextMenu>
-                                        <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext}" />
-                                        <MenuItem Header="Написать сообщение"/>
+                                        <MenuItem Header="Написать сообщение"
+                                                  Command="{Binding Path=OpenSentMessageFormCommand,
+                                                            Source={StaticResource MainWindowViewModel}}" 
+                                                  CommandParameter="{Binding Id}"/>
                                     </ContextMenu>
                                 </Setter.Value>
                             </Setter>

@@ -1,4 +1,5 @@
-﻿using Client.Models;
+﻿using Client.Infrastructure.Validators;
+using Client.Models;
 using Client.Services;
 using Client.Services.Interfaces;
 
@@ -13,13 +14,25 @@ public class SendMessageCommand : BaseCommand
         _messageService = new MessageService();
     }
 
-    public override bool CanExecute(object? parameter) => true;
+    public override bool CanExecute(object? parameter)
+    {
+        if (parameter is not MessageForSend)
+            return false;
+        if (parameter is null)
+            return false;
+
+        return IsMessageValid((MessageForSend) parameter);
+    }
 
     public override async void Execute(object? parameter)
     {
-        if (parameter is not null && parameter is MessageForSend message)
-        {
-            await _messageService.SendMessage(message);
-        }
+        await _messageService.SendMessage((MessageForSend) parameter);
+    }
+
+    private bool IsMessageValid(MessageForSend message)
+    {
+        return MessageValidator.ValidateTitle(message.Title) &&
+                MessageValidator.ValidateContent(message.Content) &&
+                MessageValidator.ValidateSelectedAddressee(message.AddresseeId);
     }
 }

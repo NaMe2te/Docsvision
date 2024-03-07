@@ -15,5 +15,5 @@ public class MessageForSend
     public DateTime DateSending { get; set; }
     public string Content { get; set; }
     public Guid SenderId { get; set; }
-    public Guid AddresseeId { get; set; }
+    public Guid? AddresseeId { get; set; }
 }

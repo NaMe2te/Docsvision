@@ -6,14 +6,14 @@ namespace Client.Infrastructure.Commands;
 
 public class OpenReadMessageWindowCommand : BaseCommand
 {
-    public override bool CanExecute(object? parameter) => true;
+    public override bool CanExecute(object? parameter)
+    {
+        return parameter is not null && parameter is Message message;
+    }
 
     public override void Execute(object? parameter)
     {
-        if (parameter is not null && parameter is Message message)
-        {
-            ReadMessageWindow readMessageWindow = new ReadMessageWindow(message);
-            readMessageWindow.Show();
-        }
+        ReadMessageWindow readMessageWindow = new ReadMessageWindow((Message) parameter);
+        readMessageWindow.Show();
     }
 }

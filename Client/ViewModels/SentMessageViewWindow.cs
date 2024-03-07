@@ -1,24 +1,27 @@
 ﻿using Client.Infrastructure.Commands;
+using Client.Infrastructure.Validators;
 using Client.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Printing;
 using System.Runtime.CompilerServices;
-using System.Security.Principal;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Client.ViewModels;
 
-public class SentMessageViewWindow : BaseViewModel
+public class SentMessageViewWindow : BaseViewModel, IDataErrorInfo
 {
     private Employee _account;
 
-    private Employee _selectedRecipient;
-    public Employee SelectedRecipient
+    private Employee? _selectedAddressee;
+    public Employee? SelectedAddressee
     {
-        get => _selectedRecipient;
+        get => _selectedAddressee;
         set
         {
-            Set(ref _selectedRecipient, value);
-            _messageForSend.AddresseeId = _selectedRecipient.Id;
+            Set(ref _selectedAddressee, value);
+            _messageForSend.AddresseeId = _selectedAddressee.Id;
         }
     }
 
@@ -53,17 +56,42 @@ public class SentMessageViewWindow : BaseViewModel
 
     private MessageForSend _messageForSend;
 
-    public MessageForSend MessageForSend 
-    {
-        get => _messageForSend;
-    }
-
-    protected override bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
-    {
-        return base.Set(ref field, value, propertyName);
-    }
+    public MessageForSend MessageForSend => _messageForSend;
 
     public ICommand SendMessageCommand { get; }
+
+    public string Error => "";
+
+    public string this[string columnName]
+    {
+        get
+        {
+            string error = string.Empty;
+            switch (columnName)
+            {
+                case nameof(SelectedAddressee):
+                    if (!MessageValidator.ValidateSelectedAddressee(SelectedAddressee?.Id))
+                    {
+                        error = "Должен быть выбран получатель";
+                    }
+                    break;
+                case nameof(MessageContent):
+                    if (!MessageValidator.ValidateContent(MessageContent))
+                    {
+                        error = "Контент часть не может быть пустой";
+                    }
+                    break;
+                case nameof(MessageTitle):
+                    if (!MessageValidator.ValidateTitle(MessageTitle))
+                    {
+                        error = "Заголовок не может быть пустым";
+                    }
+                    break;
+            }
+            
+            return error;
+        }
+    }
 
     public SentMessageViewWindow(Employee account, Guid? employeeIdForSending = null)
     {
@@ -72,8 +100,8 @@ public class SentMessageViewWindow : BaseViewModel
         _messageForSend = new MessageForSend(string.Empty, string.Empty, _account.Id, default(Guid));
         if (employeeIdForSending is not null)
         {
-            SelectedRecipient = _employees.First(e => e.Id == employeeIdForSending);
-            _messageForSend.AddresseeId = SelectedRecipient.Id;
+            SelectedAddressee = _employees.First(e => e.Id == employeeIdForSending);
+            _messageForSend.AddresseeId = SelectedAddressee.Id;
         }
 
         SendMessageCommand = new SendMessageCommand();

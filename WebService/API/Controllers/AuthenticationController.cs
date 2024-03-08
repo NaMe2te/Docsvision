@@ -33,7 +33,7 @@ public class AuthenticationController
         {
             var employee = await _authenticationService.Register(registerDto.Account, registerDto.Employee);
             return new OkObjectResult(
-                new {ProfileCredentials = employee, token = GetToken(employee.Id, employee.Email)});
+                new {ProfileCredentials = employee, Token = GetToken(employee.Id, employee.Email)});
         }
         catch (AccountWithEmailAlreadyExistException e)
         {
@@ -52,7 +52,7 @@ public class AuthenticationController
         try
         {
             EmployeeDto employee = await _authenticationService.Login(accountDto);
-            return new OkObjectResult(new { ProfileCredentials = employee, token = GetToken(employee.Id, employee.Email) });
+            return new OkObjectResult(new { ProfileCredentials = employee, Token = GetToken(employee.Id, employee.Email) });
         }
         catch (InvalidLoginOrPasswordException e)
         {

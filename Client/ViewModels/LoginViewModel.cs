@@ -2,10 +2,12 @@
 using Client.Models;
 using Client.Services;
 using Client.Services.Interfaces;
+using Client.Views.Windows;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Client.ViewModels;
@@ -75,6 +77,9 @@ public class LoginViewModel : BaseViewModel
             
 
             _accountEmployee = await _authenticationService.Login(account);
+
+            MainWindow mainWindow = new MainWindow(_accountEmployee);
+            mainWindow.Show();
         }
         catch (HttpRequestException e)
         {
@@ -116,6 +121,9 @@ public class LoginViewModel : BaseViewModel
             };
 
             _accountEmployee = await _authenticationService.Register(register);
+
+            MainWindow mainWindow = new MainWindow(_accountEmployee);
+            mainWindow.Show();
         }
         catch(HttpRequestException e)
         {

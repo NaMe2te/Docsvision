@@ -29,11 +29,13 @@ public class MainWindowViewModel : BaseViewModel
     }
     public ICommand OpenSentMessageFormCommand { get; }
 
-    public MainWindowViewModel()
+    public MainWindowViewModel() {}
+
+    public MainWindowViewModel(Employee currentAccount)
     {
         _employees = [new Employee(), new Employee(), new Employee()];
 
-        _currentAccount = new Employee();
+        _currentAccount = currentAccount;
 
         _currentAccount.SentMessages.Add(new Message());
         _currentAccount.SentMessages.Add(new Message());

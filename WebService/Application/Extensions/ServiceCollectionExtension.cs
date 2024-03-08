@@ -12,8 +12,8 @@ public static class ServiceCollectionExtension
     public static IServiceCollection AddApplication(this IServiceCollection collection)
     {
         collection.AddAutoMapper(typeof(MappingProfile));
-        collection.AddScoped<IBaseCrudService<Message, MessageDto>, MessageService>();
         collection.AddScoped<IBaseCrudService<Employee, EmployeeDto>, EmployeeService>();
+        collection.AddScoped<IMessageService, MessageService>();
         collection.AddScoped<IAuthenticationService, AuthenticationService>();
         return collection;
     }

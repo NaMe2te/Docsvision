@@ -8,27 +8,27 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+
 public class MessageController : Controller
 {
-    private readonly IBaseCrudService<Message, MessageDto> _messageService;
+    private readonly IMessageService _messageService;
 
-    public MessageController(IBaseCrudService<Message, MessageDto> messageService)
+    public MessageController(IMessageService messageService)
     {
         _messageService = messageService;
     }
     
     [HttpPost]
     [Route(nameof(Create))]
-    public async Task<ActionResult<MessageDto>> Create([FromBody] MessageDto dto)
+    public async Task<ActionResult<MessageWithProfilsDto>> Create([FromBody] MessageDto messageDto)
     {
-        var message = await _messageService.Add(dto);
+        MessageWithProfilsDto message = await _messageService.Add(messageDto);
         return Ok(message);
     }
     
     [HttpGet]
     [Route(nameof(GetById))]
-    public async Task<ActionResult<MessageDto>>  GetById([FromQuery] Guid id)
+    public async Task<ActionResult<MessageWithProfilsDto>> GetById([FromQuery] Guid id)
     {
         var message = await _messageService.Get(m => m.Id == id);
         return Ok(message);

@@ -8,6 +8,6 @@ public class EmployeeDto
     public string Name { get; set; }
     public string Department { get; set; }
     public string Email { get; set; }
-    public ICollection<MessageDto> SentMessages { get; set; }
-    public ICollection<MessageDto> ReceivedMessages { get; set; }
+    public ICollection<MessageWithProfilsDto> SentMessages { get; set; }
+    public ICollection<MessageWithProfilsDto> ReceivedMessages { get; set; }
 }

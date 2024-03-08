@@ -1,3 +1,13 @@
 ﻿namespace Application.Dtos;
 
-public record MessageDto(Guid Id, string Title, DateTime DateSending, string Content, EmployeeProfileDto Sender, EmployeeProfileDto Addressee);
+public class MessageDto
+{
+    public MessageDto() { }
+    
+    public Guid Id { get; set; }
+    public string Title { get; set; }
+    public DateTime DateSending { get; set; }
+    public string Content { get; set; }
+    public Guid SenderId { get; set; }
+    public Guid AddresseeId { get; set; }
+}

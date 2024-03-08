@@ -1,3 +1,11 @@
 ﻿namespace Application.Dtos;
 
-public record EmployeeProfileDto(Guid Id, string Name, string Department, string Email);
+public class EmployeeProfileDto
+{
+    public EmployeeProfileDto() { }
+    
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Department { get; set; }
+    public string Email { get; set; }
+}

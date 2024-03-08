@@ -18,10 +18,9 @@ public class MappingProfile : Profile
 
     private void CreateMessageMap()
     {
-        CreateMap<Message, MessageDto>()
-            .ForMember(dest => dest.Addressee, 
-                opt => opt.MapFrom(src => src.Addressee))
-            .ReverseMap();
+        CreateMap<MessageDto, Message>();
+
+        CreateMap<Message, MessageWithProfilsDto>();
     }
 
     private void CreateEmployeeMap()
@@ -34,7 +33,8 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Department,
                 opt => opt.MapFrom(src => ParseUtility.ParseEnum<Department>(src.Department)));
 
-        CreateMap<Employee, EmployeeProfileDto>();
+        CreateMap<Employee, EmployeeProfileDto>()
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(stc => stc.Account.Email));
     }
 
     private void CreateAccountMap()

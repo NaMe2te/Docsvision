@@ -13,14 +13,14 @@ public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
         _context = context;
     }
 
-    public void BeginTransaction()
+    public IDbContextTransaction BeginTransaction()
     {
-        _transaction = _context.Database.BeginTransaction();
-    }
-
-    public void CommitTransaction()
-    {
-        _transaction.Commit();
+        if (_transaction is null)
+        {
+            _transaction = _context.Database.BeginTransaction();
+        }
+        
+        return _transaction;
     }
 
     public async Task<int> SaveChangesAsync()
@@ -35,6 +35,10 @@ public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
 
     public void Dispose()
     {
-        _transaction?.Dispose();
+        if (_transaction is not null)
+        {
+            _transaction.Dispose();
+            _transaction = null;
+        }
     }
 }

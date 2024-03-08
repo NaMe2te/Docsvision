@@ -1,3 +1,13 @@
 ﻿namespace Application.Dtos;
 
-public record EmployeeDto(Guid Id, string Name, string Department, ICollection<MessageDto> SentMessages, ICollection<MessageDto> ReceivedMessages);
+public class EmployeeDto
+{
+    public EmployeeDto() { }
+    
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Department { get; set; }
+    public string Email { get; set; }
+    public ICollection<MessageDto> SentMessages { get; set; }
+    public ICollection<MessageDto> ReceivedMessages { get; set; }
+}

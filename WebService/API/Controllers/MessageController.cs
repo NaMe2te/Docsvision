@@ -1,12 +1,14 @@
 ﻿using Application.Dtos;
 using Application.Services.Abstractions;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class MessageController : Controller
 {
     private readonly IBaseCrudService<Message, MessageDto> _messageService;

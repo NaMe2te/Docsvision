@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories.EfRepositories;
 
-public abstract class BaseEfRepository<TXui> : IBaseRepository<TXui> where TXui : class
+public abstract class BaseEfRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
 {
     protected readonly DatabaseContext _databaseContext;
 
@@ -13,29 +13,34 @@ public abstract class BaseEfRepository<TXui> : IBaseRepository<TXui> where TXui 
         _databaseContext = databaseContext;
     }
 
-    public async Task<TXui> Add(TXui entity)
+    public async Task<TEntity> Add(TEntity entity)
     {
-        return (await _databaseContext.Set<TXui>().AddAsync(entity)).Entity;
+        return (await _databaseContext.Set<TEntity>().AddAsync(entity)).Entity;
     }
 
-    public async Task<TXui> Update(TXui model)
+    public async Task<TEntity> Update(TEntity model)
     {
-        return _databaseContext.Set<TXui>().Update(model).Entity;
+        return _databaseContext.Set<TEntity>().Update(model).Entity;
     }
 
-    public TXui Delete(TXui model)
+    public TEntity Delete(TEntity model)
     {
-        return _databaseContext.Set<TXui>().Remove(model).Entity;
+        return _databaseContext.Set<TEntity>().Remove(model).Entity;
     }
 
-    public async Task<TXui> Get(Expression<Func<TXui, bool>> predicate)
+    public async Task<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
     {
-        return await _databaseContext.Set<TXui>().FirstOrDefaultAsync(predicate) ?? throw new ArgumentNullException(nameof(TXui));
+        return await _databaseContext.Set<TEntity>().FirstOrDefaultAsync(predicate) ?? throw new ArgumentNullException(nameof(TEntity));
     }
 
-    public async Task<IEnumerable<TXui>> GetAll(Expression<Func<TXui, bool>>? predicate = null)
+    public async Task<TEntity?> Find(Expression<Func<TEntity, bool>> predicate)
     {
-        IQueryable<TXui> queryable = _databaseContext.Set<TXui>();
+        return await _databaseContext.Set<TEntity>().FirstOrDefaultAsync(predicate);
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>>? predicate = null)
+    {
+        IQueryable<TEntity> queryable = _databaseContext.Set<TEntity>();
 
         if (predicate is not null)
         {

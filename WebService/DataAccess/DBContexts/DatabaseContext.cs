@@ -7,6 +7,7 @@ public class DatabaseContext : DbContext
 {
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<Account> Accounts { get; set; }
     
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {

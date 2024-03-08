@@ -1,3 +1,4 @@
+using API.Extensions;
 using Application.Extensions;
 using DataAccess.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddJwtAuthentication(config);
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -36,7 +39,12 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseHttpsRedirection();
+
 app.UseCors();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

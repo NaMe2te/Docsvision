@@ -21,6 +21,7 @@ public static class ServiceCollectionExtension
         collection.AddScoped<IUnitOfWork, UnitOfWork<DatabaseContext>>();
         collection.AddScoped<IBaseRepository<Employee>, EmployeeEfRepository>();
         collection.AddScoped<IBaseRepository<Message>, MessageEfRepository>();
+        collection.AddScoped<IBaseRepository<Account>, AccountEfRepository>();
         return collection;
     }
 }

@@ -6,8 +6,7 @@ namespace DataAccess.UnitOfWork;
 
 public interface IUnitOfWork : IDisposable
 {
-    void BeginTransaction();
-    void CommitTransaction();
+    IDbContextTransaction BeginTransaction();
     Task<int> SaveChangesAsync();
     int SaveChanges();
 }

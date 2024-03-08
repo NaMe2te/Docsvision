@@ -26,5 +26,7 @@ public class EmployeeConfig : IEntityTypeConfiguration<Employee>
             .HasForeignKey(m => m.AddresseeId)
             .OnDelete(DeleteBehavior.NoAction)
             .HasPrincipalKey(e => e.Id);
+
+        builder.HasOne(e => e.Account);
     }
 }

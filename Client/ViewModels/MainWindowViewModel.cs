@@ -49,7 +49,7 @@ public class MainWindowViewModel : BaseViewModel
     {
         Account = currentAccount;
         _employeeService = new EmployeeService();
-        OpenSentMessageFormCommand = new OpenSendMessageWindowCommand(Account, OpenSendMessageWindow);
+        OpenSentMessageFormCommand = new OpenSendMessageWindowCommand(Account);
         InitializeAsync();
     }
 
@@ -57,17 +57,5 @@ public class MainWindowViewModel : BaseViewModel
     {
         IEnumerable<Employee> employees = await _employeeService.GetAll();
         Employees = new ObservableCollection<Employee>(employees);
-    }
-
-    private void OpenSendMessageWindow()
-    {
-        Guid? employeeIdForSending = null;
-        if (SelectedEmployee is not null)
-        {
-            employeeIdForSending = SelectedEmployee.Id;
-        }
-
-        var window = new SentMessageWindow(_account, employeeIdForSending);
-        window.Show();
     }
 }

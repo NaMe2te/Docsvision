@@ -4,5 +4,5 @@ namespace Client.Services.Interfaces;
 
 public interface IMessageService
 {
-    Task SendMessage(MessageForSend message);
+    Task<Message> SendMessage(MessageForSend message);
 }

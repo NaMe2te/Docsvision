@@ -7,11 +7,11 @@ namespace Client.Infrastructure.Commands;
 
 public class SendMessageCommand : BaseCommand
 {
-    private readonly IMessageService _messageService;
+    private readonly Func<Task> _asyncAxecute;
 
-    public SendMessageCommand()
+    public SendMessageCommand(Func<Task> asyncAxecute)
     {
-        _messageService = new MessageService();
+        _asyncAxecute = asyncAxecute;
     }
 
     public override bool CanExecute(object? parameter)
@@ -26,7 +26,7 @@ public class SendMessageCommand : BaseCommand
 
     public override async void Execute(object? parameter)
     {
-        await _messageService.SendMessage((MessageForSend) parameter);
+        await _asyncAxecute();
     }
 
     private bool IsMessageValid(MessageForSend message)

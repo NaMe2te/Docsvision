@@ -4,22 +4,21 @@ using Newtonsoft.Json;
 using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 
 namespace Client.Services;
 
-public class MessageService : BaseService,
-    IMessageService
+public class EmployeeService : BaseService,
+    IEmployeeService
 {
-    public async Task<Message> SendMessage(MessageForSend messageForSend)
+    public async Task<IEnumerable<Employee>> GetAll()
     {
         string token = ConfigurationManager.AppSettings["Token"];
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        HttpResponseMessage response = await _httpClient.PostAsync("api/Message/Create", JsonContent.Create(messageForSend));
+        HttpResponseMessage response = await _httpClient.GetAsync("api/Employee/GetAll");
         response.EnsureSuccessStatusCode();
         string resultString = await response.Content.ReadAsStringAsync();
         dynamic resultObject = JsonConvert.DeserializeObject(resultString);
-        Message message = resultObject.ToObject<Message>();
-        return message;
+        List<Employee> employees= resultObject.ToObject<List<Employee>>();
+        return employees;
     }
 }

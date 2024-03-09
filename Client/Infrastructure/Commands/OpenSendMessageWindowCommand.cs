@@ -8,10 +8,12 @@ namespace Client.Infrastructure.Commands;
 public class OpenSendMessageWindowCommand : BaseCommand
 {
     private readonly Employee _account;
+    private readonly Action _execute;
 
-    public OpenSendMessageWindowCommand(Employee account)
+    public OpenSendMessageWindowCommand(Employee account, Action execute)
     {
         _account = account;
+        _execute = execute;
     }
 
     public override bool CanExecute(object? parameter) => true;
@@ -21,5 +23,6 @@ public class OpenSendMessageWindowCommand : BaseCommand
         Guid? employeeIdForSending = parameter as Guid?;
         var window = new SentMessageWindow(_account, employeeIdForSending);
         window.Show();
+        // _execute();
     }
 }

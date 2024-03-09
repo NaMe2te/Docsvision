@@ -6,6 +6,7 @@ using Client.Views.Windows;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Http;
+using System.Security.Principal;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -14,8 +15,14 @@ namespace Client.ViewModels;
 
 public class LoginViewModel : BaseViewModel
 {
-    private IAuthenticationService _authenticationService;
-    private Employee? _accountEmployee;
+    private readonly IAuthenticationService _authenticationService;
+
+    private Employee _account;
+    public Employee Account
+    {
+        get => _account;
+        set => Set(ref _account, value);
+    }
 
     private string _email;
     public string Email
@@ -65,6 +72,13 @@ public class LoginViewModel : BaseViewModel
         LoginCommand = new AsyncCommand(Login);
     }
 
+    private void OpenMainWindow()
+    {
+        MainWindow mainWindow = new MainWindow(Account);
+        mainWindow.Show();
+        Application.Current.MainWindow?.Close();
+    }
+
     private async Task Login()
     {
         try
@@ -74,12 +88,11 @@ public class LoginViewModel : BaseViewModel
                 Email = Email,
                 Password = Password,
             };
-            
 
-            _accountEmployee = await _authenticationService.Login(account);
 
-            MainWindow mainWindow = new MainWindow(_accountEmployee);
-            mainWindow.Show();
+            Account = await _authenticationService.Login(account);
+
+            OpenMainWindow();
         }
         catch (HttpRequestException e)
         {
@@ -120,10 +133,9 @@ public class LoginViewModel : BaseViewModel
                 }
             };
 
-            _accountEmployee = await _authenticationService.Register(register);
+            Account = await _authenticationService.Register(register);
 
-            MainWindow mainWindow = new MainWindow(_accountEmployee);
-            mainWindow.Show();
+            OpenMainWindow();
         }
         catch(HttpRequestException e)
         {

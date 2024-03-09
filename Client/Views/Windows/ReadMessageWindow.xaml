@@ -22,13 +22,13 @@
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <TextBlock Text="Отправитель: " FontWeight="Bold"/>
-            <TextBlock Text="{Binding CurrentMessage.Sender.FullName}" Margin="5 0"/>
+            <TextBlock Text="{Binding CurrentMessage.Sender.Name}" Margin="5 0"/>
             <TextBlock Text="{Binding CurrentMessage.Sender.Department, StringFormat='({0})'}" Margin="5 0"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <TextBlock Text="Получатель: " FontWeight="Bold"/>
-            <TextBlock Text="{Binding CurrentMessage.Addressee.FullName}" Margin="5 0"/>
+            <TextBlock Text="{Binding CurrentMessage.Addressee.Name}" Margin="5 0"/>
             <TextBlock Text="{Binding CurrentMessage.Addressee.Department, StringFormat='({0})'}" Margin="5 0"/>
         </StackPanel>
 

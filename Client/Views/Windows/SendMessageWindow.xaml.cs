@@ -2,6 +2,7 @@
 using Client.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Client.Views.Windows;
 
@@ -15,4 +16,6 @@ public partial class SentMessageWindow : Window
         InitializeComponent();
         DataContext = new SentMessageViewWindow(account, employeeIdForSending);
     }
+
+    private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
 }

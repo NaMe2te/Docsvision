@@ -1,10 +1,13 @@
 ﻿using Client.Infrastructure.Commands;
 using Client.Infrastructure.Validators;
 using Client.Models;
+using Client.Services;
+using Client.Services.Interfaces;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Printing;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -12,7 +15,16 @@ namespace Client.ViewModels;
 
 public class SentMessageViewWindow : BaseViewModel, IDataErrorInfo
 {
+    private readonly IEmployeeService _employeeService;
+    private readonly IMessageService _messageService;
+
+
     private Employee _account;
+    public Employee Account
+    {
+        get => _account;
+        set => Set(ref _account, value);
+    }
 
     private Employee? _selectedAddressee;
     public Employee? SelectedAddressee
@@ -93,17 +105,33 @@ public class SentMessageViewWindow : BaseViewModel, IDataErrorInfo
         }
     }
 
+    public ICommand SendMessage { get; }
+
     public SentMessageViewWindow(Employee account, Guid? employeeIdForSending = null)
     {
-        _account = new Employee();
-        _employees = [new Employee(), new Employee(), new Employee()];
+        _account = account;
         _messageForSend = new MessageForSend(string.Empty, string.Empty, _account.Id, default(Guid));
+        _employeeService = new EmployeeService();
+        _messageService = new MessageService();
+        SendMessageCommand = new SendMessageCommand(SendMessageAsync);
+        InitializeAsync(employeeIdForSending);
+    }
+
+    private async void InitializeAsync(Guid? employeeIdForSending)
+    {
+        IEnumerable<Employee> employees = await _employeeService.GetAll();
+        Employees = new ObservableCollection<Employee>(employees);
         if (employeeIdForSending is not null)
         {
             SelectedAddressee = _employees.First(e => e.Id == employeeIdForSending);
             _messageForSend.AddresseeId = SelectedAddressee.Id;
         }
+    }
 
-        SendMessageCommand = new SendMessageCommand();
+    private async Task SendMessageAsync()
+    {
+        Message message = await _messageService.SendMessage(MessageForSend);
+        Account.SentMessages.Add(message);
+       
     }
 }

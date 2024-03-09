@@ -1,12 +1,18 @@
 ﻿using Client.Infrastructure.Commands;
 using Client.Models;
+using Client.Services;
+using Client.Services.Interfaces;
+using Client.Views.Windows;
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
 using System.Windows.Input;
 
 namespace Client.ViewModels;
 
 public class MainWindowViewModel : BaseViewModel
 {
+    private readonly IEmployeeService _employeeService;
+
     private string _title = "Docsvision";
     public string Title
     {
@@ -21,29 +27,47 @@ public class MainWindowViewModel : BaseViewModel
         set => Set(ref _employees, value);
     }
 
-    private Employee _currentAccount;
-    public Employee CurrentAccount
+    private Employee _account;
+    public Employee Account
     {
-        get => _currentAccount;
-        set => Set(ref _currentAccount, value);
+        get => _account;
+        set => Set(ref _account, value);
     }
+
+    private Employee _selectedEmployee;
+    public Employee SelectedEmployee
+    {
+        get => _selectedEmployee;
+        set => Set(ref _selectedEmployee, value);
+    }
+
     public ICommand OpenSentMessageFormCommand { get; }
 
     public MainWindowViewModel() {}
 
     public MainWindowViewModel(Employee currentAccount)
     {
-        _employees = [new Employee(), new Employee(), new Employee()];
+        Account = currentAccount;
+        _employeeService = new EmployeeService();
+        OpenSentMessageFormCommand = new OpenSendMessageWindowCommand(Account, OpenSendMessageWindow);
+        InitializeAsync();
+    }
 
-        _currentAccount = currentAccount;
+    private async void InitializeAsync()
+    {
+        IEnumerable<Employee> employees = await _employeeService.GetAll();
+        Employees = new ObservableCollection<Employee>(employees);
+    }
 
-        _currentAccount.SentMessages.Add(new Message());
-        _currentAccount.SentMessages.Add(new Message());
-        _currentAccount.SentMessages.Add(new Message());
+    private void OpenSendMessageWindow()
+    {
+        Guid? employeeIdForSending = null;
+        if (SelectedEmployee is not null)
+        {
+            employeeIdForSending = SelectedEmployee.Id;
+        }
 
-        _currentAccount.ReceivedMessages.Add(new Message());
-        _currentAccount.ReceivedMessages.Add(new Message());
-
-        OpenSentMessageFormCommand = new OpenSendMessageWindowCommand(_currentAccount);
+        var window = new SentMessageWindow(_account, employeeIdForSending);
+        window.Show();
     }
 }

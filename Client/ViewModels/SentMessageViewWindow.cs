@@ -18,6 +18,13 @@ public class SentMessageViewWindow : BaseViewModel, IDataErrorInfo
     private readonly IEmployeeService _employeeService;
     private readonly IMessageService _messageService;
 
+    private ObservableCollection<Message> _sentMessages;
+    public ObservableCollection<Message> SentMessages
+    {
+        get => _sentMessages;
+        set => Set(ref _sentMessages, value);
+    }
+
 
     private Employee _account;
     public Employee Account
@@ -107,12 +114,16 @@ public class SentMessageViewWindow : BaseViewModel, IDataErrorInfo
 
     public ICommand SendMessage { get; }
 
+    public event EventHandler<Message> SentMessageAdded;
+
     public SentMessageViewWindow(Employee account, Guid? employeeIdForSending = null)
     {
-        _account = account;
-        _messageForSend = new MessageForSend(string.Empty, string.Empty, _account.Id, default(Guid));
+        Account = account;
+        SentMessages = new ObservableCollection<Message>(Account.SentMessages);
+        _messageForSend = new MessageForSend(string.Empty, string.Empty, Account.Id, default(Guid));
         _employeeService = new EmployeeService();
         _messageService = new MessageService();
+        SentMessageAdded = delegate { };
         SendMessageCommand = new SendMessageCommand(SendMessageAsync);
         InitializeAsync(employeeIdForSending);
     }
@@ -128,10 +139,13 @@ public class SentMessageViewWindow : BaseViewModel, IDataErrorInfo
         }
     }
 
+
     private async Task SendMessageAsync()
     {
         Message message = await _messageService.SendMessage(MessageForSend);
-        Account.SentMessages.Add(message);
-       
+        message = await _messageService.GetMessageById(message.Id);
+        _account.SentMessages.Add(message);
+        SentMessages.Add(message);
+        SentMessageAdded(this, message);
     }
 }

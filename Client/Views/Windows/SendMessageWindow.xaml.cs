@@ -11,10 +11,10 @@ namespace Client.Views.Windows;
 /// </summary>
 public partial class SentMessageWindow : Window
 {
-    public SentMessageWindow(Employee account, Guid? employeeIdForSending = null)
+    public SentMessageWindow(Employee account, SentMessageViewWindow viewModel)
     {
         InitializeComponent();
-        DataContext = new SentMessageViewWindow(account, employeeIdForSending);
+        DataContext = viewModel;
     }
 
     private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();

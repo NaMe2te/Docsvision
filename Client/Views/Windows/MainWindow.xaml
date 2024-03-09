@@ -43,7 +43,7 @@
                         <Label Content="Отправленные сообщения: " Grid.Row="1" FontWeight="Bold"/>
 
                         <ListBox Grid.Row="2" 
-                                 ItemsSource="{Binding Account.SentMessages}"
+                                 ItemsSource="{Binding SentMessages}"
                                 >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>

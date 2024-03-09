@@ -104,6 +104,9 @@ public class LoginViewModel : BaseViewModel
                 case HttpStatusCode.Unauthorized:
                     Error = "Неверный eмель или пароль";
                     break;
+                default:
+                    Error = "Что-то пошло не так, попробуйте повторить попытку позже";
+                    break;
             }
         }
         catch (Exception ex)
@@ -146,6 +149,9 @@ public class LoginViewModel : BaseViewModel
                     break;
                 case HttpStatusCode.Conflict:
                     Error = "Аккаунт с таким eмейл уже используется";
+                    break;
+                default:
+                    Error = "Что-то пошло не так, попробуйте повторить попытку позже";
                     break;
             }
         }

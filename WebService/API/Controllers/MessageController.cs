@@ -12,33 +12,67 @@ namespace API.Controllers;
 public class MessageController : Controller
 {
     private readonly IMessageService _messageService;
+    private readonly ILogger _logger;
 
-    public MessageController(IMessageService messageService)
+    public MessageController(IMessageService messageService, ILogger<MessageController> logger)
     {
         _messageService = messageService;
+        _logger = logger;
     }
     
     [HttpPost]
     [Route(nameof(Create))]
     public async Task<ActionResult<MessageWithProfilsDto>> Create([FromBody] MessageDto messageDto)
     {
-        MessageWithProfilsDto message = await _messageService.Add(messageDto);
-        return Ok(message);
+        try
+        {
+            MessageWithProfilsDto message = await _messageService.Add(messageDto);
+            _logger.LogInformation("Successfully have added {MessageId} messages", message.Id);
+            return Ok(message);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "An error occurred in Create method");
+            return StatusCode(500);
+        }
     }
     
     [HttpGet]
     [Route(nameof(GetById))]
     public async Task<ActionResult<MessageWithProfilsDto>> GetById([FromQuery] Guid id)
     {
-        var message = await _messageService.Get(m => m.Id == id);
-        return Ok(message);
+        try
+        {
+            var message = await _messageService.Get(m => m.Id == id);
+            _logger.LogInformation("Successfully have returned {MessageId} message", message.Id);
+            return Ok(message);
+        }
+        catch (ArgumentNullException e)
+        {
+            _logger.LogError(e, e.Message);
+            return NotFound(e.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred in GetById method");
+            return StatusCode(500);
+        }
     }
     
     [HttpGet]
     [Route(nameof(GetAll))]
     public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetAll()
     {
-        var messages = await _messageService.GetAll();
-        return Ok(messages);
+        try
+        {
+            var messages = await _messageService.GetAll();
+            _logger.LogInformation("Successfully retrieved {MessageCount} messages", messages.Count());
+            return Ok(messages);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred in GetAll method");
+            return StatusCode(500);
+        }
     }
 }

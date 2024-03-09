@@ -6,6 +6,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
+builder.Logging
+    .ClearProviders()
+    .AddConsole();
+
 builder.Services.AddDatabaseContext(x => x.UseLazyLoadingProxies().UseSqlServer(config.GetConnectionString("DatabaseConnection")));
 builder.Services.AddDataAccess();
 builder.Services.AddApplication();

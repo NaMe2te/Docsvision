@@ -5,7 +5,6 @@ using API.Dtos;
 using Application.Dtos;
 using Application.Exceptions;
 using Application.Services.Abstractions;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,11 +17,13 @@ public class AuthenticationController
 {
     private readonly IAuthenticationService _authenticationService;
     private readonly IConfiguration _configuration;
+    private readonly ILogger _logger;
 
-    public AuthenticationController(IAuthenticationService authenticationService, IConfiguration configuration)
+    public AuthenticationController(IAuthenticationService authenticationService, IConfiguration configuration, ILogger<AuthenticationController> logger)
     {
         _authenticationService = authenticationService;
         _configuration = configuration;
+        _logger = logger;
     }
     
     [HttpPost]
@@ -32,15 +33,18 @@ public class AuthenticationController
         try
         {
             var employee = await _authenticationService.Register(registerDto.Account, registerDto.Employee);
+            _logger.LogInformation("Successfully register new employee with id {EmployeeId}", employee.Id);
             return new OkObjectResult(
                 new {ProfileCredentials = employee, Token = GetToken(employee.Id, employee.Email)});
         }
         catch (AccountWithEmailAlreadyExistException e)
         {
+            _logger.LogError(e, e.Message);
             return new ConflictObjectResult(e.Message);
         }
         catch (Exception e)
         {
+            _logger.LogError(e, e.Message);
             return new BadRequestObjectResult(e.Message);
         }
     }
@@ -52,10 +56,12 @@ public class AuthenticationController
         try
         {
             EmployeeDto employee = await _authenticationService.Login(accountDto);
+            _logger.LogInformation("Successfully login employee with id {EmployeeId}", employee.Id);
             return new OkObjectResult(new { ProfileCredentials = employee, Token = GetToken(employee.Id, employee.Email) });
         }
         catch (InvalidLoginOrPasswordException e)
         {
+            _logger.LogError(e, e.Message);
             return new UnauthorizedObjectResult(e.Message);
         }
     }

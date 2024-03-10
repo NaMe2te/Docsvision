@@ -37,6 +37,9 @@ public class DatabaseContext : DbContext
         
         var account2 = new Account("string@mail.ru", HashPassword("string"));
         Accounts.Add(account2);
+
+        var employee2 = new Employee("Nikitin Nikita Nikitovich", Department.Marketing);
+        Employees.Add(employee2);
         
         var account3 = new Account("prik@mail.ru", HashPassword("prik"));
         Accounts.Add(account3);
@@ -46,7 +49,7 @@ public class DatabaseContext : DbContext
         Employees.Add(employee3);
     }
     
-    private string HashPassword(string password)
+    private string HashPassword(string password) // метод, чтобы загрузить данные при первом запуске программы
     {
         using (SHA256 sha256Hash = SHA256.Create())
         {

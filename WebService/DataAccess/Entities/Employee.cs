@@ -14,7 +14,7 @@ public class Employee
 
     protected Employee() { }
     
-    public Guid Id { get; init; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public Department Department { get; set; }
     public virtual Account Account { get; set; }

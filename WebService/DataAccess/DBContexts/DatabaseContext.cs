@@ -35,17 +35,22 @@ public class DatabaseContext : DbContext
         employee1.Account = account1;
         Employees.Add(employee1);
         
+        SaveChanges();
+        
         var account2 = new Account("string@mail.ru", HashPassword("string"));
         Accounts.Add(account2);
 
         var employee2 = new Employee("Nikitin Nikita Nikitovich", Department.Marketing);
+        employee2.Account = account2;
         Employees.Add(employee2);
+        
+        SaveChanges();
         
         var account3 = new Account("prik@mail.ru", HashPassword("prik"));
         Accounts.Add(account3);
         
         var employee3 = new Employee("Ivanov Ivan Ivanovich", Department.It);
-        employee3.Account = account2;
+        employee3.Account = account3;
         Employees.Add(employee3);
 
         SaveChanges();

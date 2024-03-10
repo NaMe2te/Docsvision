@@ -47,6 +47,8 @@ public class DatabaseContext : DbContext
         var employee3 = new Employee("Ivanov Ivan Ivanovich", Department.It);
         employee3.Account = account2;
         Employees.Add(employee3);
+
+        SaveChanges();
     }
     
     private string HashPassword(string password) // метод, чтобы загрузить данные при первом запуске программы
